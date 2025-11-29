@@ -9,6 +9,7 @@ const Calculator = () => {
   const [expression, setExpression] = useState('');
   const [result, setResult] = useState('');
   const [error, setError] = useState('');
+  const [memory, setMemory] = useState<number | null>(null); // New state for memory
 
   // Calculator operations
   const add = (x: number, y: number): number => x + y;
@@ -30,9 +31,81 @@ const multiply = (x: number, y: number): number => x * y;
 
   const round = (x: number): number => Math.round(x);
   const floor = (x: number): number => Math.floor(x);
-  const ceil = (x: number): number => Math.ceil(x);
+    const ceil = (x: number): number => Math.ceil(x);
 
-        const resetCalculator = () => {
+    const reciprocal = (x: number): number | string => {
+    if (x === 0) {
+      return "Error: Cannot find reciprocal of zero!";
+    } else {
+      return 1 / x;
+    }
+  };
+
+  const factorial = (x: number): number | string => {
+    if (x < 0 || !Number.isInteger(x)) {
+      return 'Error: Factorial is only defined for non-negative integers';
+    }
+    if (x === 0) {
+      return 1;
+    }
+    let result = 1;
+    for (let i = 2; i <= x; i++) {
+      result *= i;
+    }
+    return result;
+  };
+
+  // Memory operations
+  const handleMemoryClear = () => {
+    setMemory(null);
+    setError('');
+  };
+
+  const handleMemoryRecall = () => {
+    if (memory !== null) {
+      // Depending on the current mode, recall into num1 or expression
+      if (mode === 'step-by-step') {
+        setNum1(memory.toString());
+        setNum2(''); // Clear num2 as memory recall usually applies to the first operand
+      } else if (mode === 'expression') {
+        setExpression(memory.toString());
+      }
+      setError('');
+    } else {
+      setError('Memory is empty!');
+    }
+  };
+
+  const handleMemoryAdd = () => {
+    if (result && !isNaN(parseFloat(result))) {
+      const currentResult = parseFloat(result);
+      setMemory(prevMemory => (prevMemory !== null ? prevMemory + currentResult : currentResult));
+      setError('');
+    } else {
+      setError('No valid result to add to memory!');
+    }
+  };
+
+  const handleMemorySubtract = () => {
+    if (result && !isNaN(parseFloat(result))) {
+      const currentResult = parseFloat(result);
+      setMemory(prevMemory => (prevMemory !== null ? prevMemory - currentResult : -currentResult));
+      setError('');
+    } else {
+      setError('No valid result to subtract from memory!');
+    }
+  };
+
+  const handleMemoryStore = () => {
+    if (result && !isNaN(parseFloat(result))) {
+      setMemory(parseFloat(result));
+      setError('');
+    } else {
+      setError('No valid result to store in memory!');
+    }
+  };
+
+  const resetCalculator = () => {
     setMode('menu');
     setCurrentStep(0);
     setOperation('');
@@ -55,7 +128,7 @@ const multiply = (x: number, y: number): number => x * y;
     const number1 = parseFloat(num1);
     const number2 = parseFloat(num2);
 
-    if (['sqrt', 'round', 'floor', 'ceil'].includes(operation)) {
+    if (['sqrt', 'round', 'floor', 'ceil', 'reciprocal'].includes(operation)) {
       if (isNaN(number1)) {
         setError(`Please enter a valid number for ${operation}!`);
         return;
@@ -111,12 +184,20 @@ const multiply = (x: number, y: number): number => x * y;
         calcResult = ceil(number1);
         operationSymbol = 'Ceil';
         break;
+      case 'factorial':
+        calcResult = factorial(number1);
+        operationSymbol = '!';
+        break;
+      case 'reciprocal':
+        calcResult = reciprocal(number1);
+        operationSymbol = '1/';
+        break;
       default:
         setError('Invalid operation!');
         return;
     }
 
-          if (['sqrt', 'round', 'floor', 'ceil'].includes(operation)) {
+          if (['sqrt', 'round', 'floor', 'ceil', 'factorial', 'reciprocal'].includes(operation)) {
           setResult(`${operationSymbol}(${number1}) = ${calcResult}`);
         } else {
           setResult(`${number1} ${operationSymbol} ${number2} = ${calcResult}`);
@@ -126,7 +207,7 @@ const multiply = (x: number, y: number): number => x * y;
   const handleExpressionCalculation = () => {
     const parts = expression.split(/\s+/);
 
-    if (parts.length === 2 && ['sqrt', 'round', 'floor', 'ceil'].includes(parts[0].toLowerCase())) {
+    if (parts.length === 2 && ['sqrt', 'round', 'floor', 'ceil', 'factorial', 'reciprocal'].includes(parts[0].toLowerCase())) {
       const operation = parts[0].toLowerCase();
       const num = parseFloat(parts[1]);
       if (isNaN(num)) {
@@ -152,6 +233,14 @@ const multiply = (x: number, y: number): number => x * y;
           calcResult = ceil(num);
           operationSymbol = 'Ceil';
           break;
+        case 'factorial':
+          calcResult = factorial(num);
+          operationSymbol = '!';
+          break;
+        case 'reciprocal':
+          calcResult = reciprocal(num);
+          operationSymbol = '1/';
+          break;
         default:
           setError('Invalid unary operation!');
           return;
@@ -160,7 +249,7 @@ const multiply = (x: number, y: number): number => x * y;
       setError('');
       return;
     } else if (parts.length !== 3) {
-      setError('Please enter in format: number operator number (e.g., 5 + 3) or sqrt number (e.g., sqrt 9)');
+      setError('Please enter in format: number operator number (e.g., 5 + 3), or a unary operation (e.g., sqrt 9, reciprocal 5)');
       return;
     }
 
@@ -295,6 +384,18 @@ const multiply = (x: number, y: number): number => x * y;
               10. Power (^)
             </button>
             <button
+              onClick={() => {setOperation('factorial'); setCurrentStep(2);}}
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+            >
+              11. Factorial (!)
+            </button>
+            <button
+              onClick={() => {setOperation('reciprocal'); setCurrentStep(2);}}
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+            >
+              12. Reciprocal (1/x)
+            </button>
+            <button
               onClick={resetCalculator}
               className="w-full bg-gray-500 hover:bg-gray-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
             >
@@ -314,7 +415,9 @@ const multiply = (x: number, y: number): number => x * y;
         power: 'Power',
         round: 'Round',
         floor: 'Floor',
-        ceil: 'Ceil'
+        ceil: 'Ceil',
+        factorial: 'Factorial',
+        reciprocal: 'Reciprocal'
       };
 
       return (
@@ -333,7 +436,7 @@ const multiply = (x: number, y: number): number => x * y;
                 placeholder="First number"
               />
             </div>
-            {['sqrt', 'round', 'floor', 'ceil'].includes(operation) ? null : (
+            {['sqrt', 'round', 'floor', 'ceil', 'reciprocal'].includes(operation) ? null : (
               <div>
                 <label className="block text-gray-700 font-medium mb-2">Enter second number:</label>
                 <input
@@ -371,14 +474,14 @@ const multiply = (x: number, y: number): number => x * y;
       <div className="space-y-4">
         <div>
           <label className="block text-gray-700 font-medium mb-2">
-            Enter your expression (e.g., 5 + 3):
+            Enter your expression (e.g., 5 + 3) or unary operation (e.g., sqrt 9, reciprocal 5):
           </label>
           <input
             type="text"
             value={expression}
             onChange={(e) => setExpression(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            placeholder="e.g., 10 / 2"
+            placeholder="e.g., 10 / 2 or reciprocal 5"
             onKeyPress={(e) => e.key === 'Enter' && handleExpressionCalculation()}
           />
         </div>
@@ -408,7 +511,7 @@ const multiply = (x: number, y: number): number => x * y;
           <div className="text-center mb-8">
                         <h1 className="text-3xl font-bold text-gray-800 mb-2">Full-Featured Math Calculator</h1>
             <div className="border-b-2 border-blue-500 w-16 mx-auto mb-4"></div>
-                        <p className="text-gray-600">Operations: Add (+), Subtract (-), Multiply (x), Divide (÷), Percentage (%), Square Root (√), Power (x^y), Round (R), Floor (F), Ceil (C)</p>
+                        <p className="text-gray-600">Operations: Add (+), Subtract (-), Multiply (x), Divide (÷), Percentage (%), Square Root (√), Power (x^y), Round (R), Floor (F), Ceil (C), Factorial (!)</p>
           </div>
 
           {/* Main Content */}
@@ -444,6 +547,43 @@ const multiply = (x: number, y: number): number => x * y;
               </button>
             </div>
           )}
+
+          {/* Memory Display and Controls */}
+          <div className="mt-8 p-4 bg-gray-50 border border-gray-200 rounded-lg">
+            <div className="font-bold text-lg text-gray-800 mb-2">Memory: {memory !== null ? memory : 'Empty'}</div>
+            <div className="grid grid-cols-5 gap-2">
+              <button
+                onClick={handleMemoryClear}
+                className="bg-red-400 hover:bg-red-500 text-white font-medium py-2 px-2 rounded-lg text-sm transition-colors"
+              >
+                MC
+              </button>
+              <button
+                onClick={handleMemoryRecall}
+                className="bg-blue-400 hover:bg-blue-500 text-white font-medium py-2 px-2 rounded-lg text-sm transition-colors"
+              >
+                MR
+              </button>
+              <button
+                onClick={handleMemoryAdd}
+                className="bg-green-400 hover:bg-green-500 text-white font-medium py-2 px-2 rounded-lg text-sm transition-colors"
+              >
+                M+
+              </button>
+              <button
+                onClick={handleMemorySubtract}
+                className="bg-yellow-400 hover:bg-yellow-500 text-white font-medium py-2 px-2 rounded-lg text-sm transition-colors"
+              >
+                M-
+              </button>
+              <button
+                onClick={handleMemoryStore}
+                className="bg-purple-400 hover:bg-purple-500 text-white font-medium py-2 px-2 rounded-lg text-sm transition-colors"
+              >
+                MS
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -31,7 +31,18 @@ const multiply = (x: number, y: number): number => x * y;
 
   const round = (x: number): number => Math.round(x);
   const floor = (x: number): number => Math.floor(x);
-    const ceil = (x: number): number => Math.ceil(x);
+      const ceil = (x: number): number => Math.ceil(x);
+
+  const sin = (x: number): number => Math.sin(x * Math.PI / 180); // Assuming input in degrees
+  const cos = (x: number): number => Math.cos(x * Math.PI / 180); // Assuming input in degrees
+  const tan = (x: number): number | string => {
+    const angleInRadians = x * Math.PI / 180;
+    // Check for angles where tan is undefined (e.g., 90, 270 degrees)
+    if (Math.abs(Math.cos(angleInRadians)) < 1e-10) {
+      return "Error: Tan undefined";
+    }
+    return Math.tan(angleInRadians);
+  };
 
     const reciprocal = (x: number): number | string => {
     if (x === 0) {
@@ -128,7 +139,7 @@ const multiply = (x: number, y: number): number => x * y;
     const number1 = parseFloat(num1);
     const number2 = parseFloat(num2);
 
-    if (['sqrt', 'round', 'floor', 'ceil', 'reciprocal'].includes(operation)) {
+    if (['sqrt', 'round', 'floor', 'ceil', 'reciprocal', 'sin', 'cos', 'tan', 'factorial'].includes(operation)) {
       if (isNaN(number1)) {
         setError(`Please enter a valid number for ${operation}!`);
         return;
@@ -192,12 +203,24 @@ const multiply = (x: number, y: number): number => x * y;
         calcResult = reciprocal(number1);
         operationSymbol = '1/';
         break;
+      case 'sin':
+        calcResult = sin(number1);
+        operationSymbol = 'sin';
+        break;
+      case 'cos':
+        calcResult = cos(number1);
+        operationSymbol = 'cos';
+        break;
+      case 'tan':
+        calcResult = tan(number1);
+        operationSymbol = 'tan';
+        break;
       default:
         setError('Invalid operation!');
         return;
     }
 
-          if (['sqrt', 'round', 'floor', 'ceil', 'factorial', 'reciprocal'].includes(operation)) {
+          if (['sqrt', 'round', 'floor', 'ceil', 'factorial', 'reciprocal', 'sin', 'cos', 'tan'].includes(operation)) {
           setResult(`${operationSymbol}(${number1}) = ${calcResult}`);
         } else {
           setResult(`${number1} ${operationSymbol} ${number2} = ${calcResult}`);
@@ -207,7 +230,7 @@ const multiply = (x: number, y: number): number => x * y;
   const handleExpressionCalculation = () => {
     const parts = expression.split(/\s+/);
 
-    if (parts.length === 2 && ['sqrt', 'round', 'floor', 'ceil', 'factorial', 'reciprocal'].includes(parts[0].toLowerCase())) {
+    if (parts.length === 2 && ['sqrt', 'round', 'floor', 'ceil', 'factorial', 'reciprocal', 'sin', 'cos', 'tan'].includes(parts[0].toLowerCase())) {
       const operation = parts[0].toLowerCase();
       const num = parseFloat(parts[1]);
       if (isNaN(num)) {
@@ -240,6 +263,18 @@ const multiply = (x: number, y: number): number => x * y;
         case 'reciprocal':
           calcResult = reciprocal(num);
           operationSymbol = '1/';
+          break;
+        case 'sin':
+          calcResult = sin(num);
+          operationSymbol = 'sin';
+          break;
+        case 'cos':
+          calcResult = cos(num);
+          operationSymbol = 'cos';
+          break;
+        case 'tan':
+          calcResult = tan(num);
+          operationSymbol = 'tan';
           break;
         default:
           setError('Invalid unary operation!');
@@ -389,11 +424,29 @@ const multiply = (x: number, y: number): number => x * y;
             >
               11. Factorial (!)
             </button>
-            <button
+                        <button
               onClick={() => {setOperation('reciprocal'); setCurrentStep(2);}}
               className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
             >
               12. Reciprocal (1/x)
+            </button>
+            <button
+              onClick={() => {setOperation('sin'); setCurrentStep(2);}}
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+            >
+              13. Sine (sin)
+            </button>
+            <button
+              onClick={() => {setOperation('cos'); setCurrentStep(2);}}
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+            >
+              14. Cosine (cos)
+            </button>
+            <button
+              onClick={() => {setOperation('tan'); setCurrentStep(2);}}
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+            >
+              15. Tangent (tan)
             </button>
             <button
               onClick={resetCalculator}
@@ -417,7 +470,10 @@ const multiply = (x: number, y: number): number => x * y;
         floor: 'Floor',
         ceil: 'Ceil',
         factorial: 'Factorial',
-        reciprocal: 'Reciprocal'
+        reciprocal: 'Reciprocal',
+        sin: 'Sine',
+        cos: 'Cosine',
+        tan: 'Tangent'
       };
 
       return (
@@ -436,7 +492,7 @@ const multiply = (x: number, y: number): number => x * y;
                 placeholder="First number"
               />
             </div>
-            {['sqrt', 'round', 'floor', 'ceil', 'reciprocal'].includes(operation) ? null : (
+            {['sqrt', 'round', 'floor', 'ceil', 'reciprocal', 'sin', 'cos', 'tan', 'factorial'].includes(operation) ? null : (
               <div>
                 <label className="block text-gray-700 font-medium mb-2">Enter second number:</label>
                 <input
@@ -511,7 +567,7 @@ const multiply = (x: number, y: number): number => x * y;
           <div className="text-center mb-8">
                         <h1 className="text-3xl font-bold text-gray-800 mb-2">Full-Featured Math Calculator</h1>
             <div className="border-b-2 border-blue-500 w-16 mx-auto mb-4"></div>
-                        <p className="text-gray-600">Operations: Add (+), Subtract (-), Multiply (x), Divide (÷), Percentage (%), Square Root (√), Power (x^y), Round (R), Floor (F), Ceil (C), Factorial (!)</p>
+                                                <p className="text-gray-600">Operations: Add (+), Subtract (-), Multiply (x), Divide (÷), Percentage (%), Square Root (√), Power (x^y), Round (R), Floor (F), Ceil (C), Factorial (!), Sine (sin), Cosine (cos), Tangent (tan)</p>
           </div>
 
           {/* Main Content */}

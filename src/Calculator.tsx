@@ -10,6 +10,7 @@ const Calculator = () => {
   const [result, setResult] = useState('');
   const [error, setError] = useState('');
   const [memory, setMemory] = useState<number | null>(null); // New state for memory
+  const [conversionDirection, setConversionDirection] = useState<'deg2rad' | 'rad2deg'>('deg2rad'); // State for angle conversion direction
 
   // Calculator operations
   const add = (x: number, y: number): number => x + y;
@@ -159,7 +160,7 @@ const multiply = (x: number, y: number): number => x * y;
     const number1 = parseFloat(num1);
     const number2 = parseFloat(num2);
 
-    if (['sqrt', 'round', 'floor', 'ceil', 'reciprocal', 'sin', 'cos', 'tan', 'factorial', 'log', 'log10', 'exp', 'deg2rad', 'rad2deg'].includes(operation)) {
+    if (['sqrt', 'round', 'floor', 'ceil', 'reciprocal', 'sin', 'cos', 'tan', 'factorial', 'log', 'log10', 'exp', 'angleConversion'].includes(operation)) {
       if (isNaN(number1)) {
         setError(`Please enter a valid number for ${operation}!`);
         return;
@@ -247,20 +248,21 @@ const multiply = (x: number, y: number): number => x * y;
         calcResult = exponential(number1);
         operationSymbol = 'e^';
         break;
-      case 'deg2rad':
-        calcResult = degToRad(number1);
-        operationSymbol = 'deg→rad';
-        break;
-      case 'rad2deg':
-        calcResult = radToDeg(number1);
-        operationSymbol = 'rad→deg';
+      case 'angleConversion':
+        if (conversionDirection === 'deg2rad') {
+          calcResult = degToRad(number1);
+          operationSymbol = 'deg→rad';
+        } else {
+          calcResult = radToDeg(number1);
+          operationSymbol = 'rad→deg';
+        }
         break;
       default:
         setError('Invalid operation!');
         return;
     }
 
-          if (['sqrt', 'round', 'floor', 'ceil', 'factorial', 'reciprocal', 'sin', 'cos', 'tan', 'log', 'log10', 'exp', 'deg2rad', 'rad2deg'].includes(operation)) {
+          if (['sqrt', 'round', 'floor', 'ceil', 'factorial', 'reciprocal', 'sin', 'cos', 'tan', 'log', 'log10', 'exp', 'angleConversion'].includes(operation)) {
           setResult(`${operationSymbol}(${number1}) = ${calcResult}`);
         } else {
           setResult(`${number1} ${operationSymbol} ${number2} = ${calcResult}`);
@@ -527,16 +529,10 @@ const multiply = (x: number, y: number): number => x * y;
               18. Exponential (e^x)
             </button>
             <button
-              onClick={() => {setOperation('deg2rad'); setCurrentStep(2);}}
+              onClick={() => {setOperation('angleConversion'); setCurrentStep(2);}}
               className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
             >
-              19. Degrees to Radians (deg→rad)
-            </button>
-            <button
-              onClick={() => {setOperation('rad2deg'); setCurrentStep(2);}}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
-            >
-              20. Radians to Degrees (rad→deg)
+              19. Angle Conversion (deg ⇄ rad)
             </button>
             <button
               onClick={resetCalculator}
@@ -548,7 +544,7 @@ const multiply = (x: number, y: number): number => x * y;
         </div>
       );
     } else if (currentStep === 2) {
-            const operationNames = {
+                        const operationNames = {
         add: 'Addition',
         subtract: 'Subtraction',
         divide: 'Division',
@@ -567,8 +563,7 @@ const multiply = (x: number, y: number): number => x * y;
         log: 'Natural Logarithm',
         log10: 'Logarithm Base 10',
         exp: 'Exponential',
-        deg2rad: 'Degrees to Radians',
-        rad2deg: 'Radians to Degrees'
+        angleConversion: 'Angle Conversion'
       };
 
       return (
@@ -577,17 +572,53 @@ const multiply = (x: number, y: number): number => x * y;
             {operationNames[operation as keyof typeof operationNames]}
           </h3>
           <div className="space-y-4">
+            {operation === 'angleConversion' && (
+              <div className="flex justify-center mb-4">
+                <div className="inline-flex rounded-lg border border-gray-300 bg-white p-1">
+                  <button
+                    onClick={() => setConversionDirection('deg2rad')}
+                    className={`px-4 py-2 rounded-md font-medium transition-colors ${
+                      conversionDirection === 'deg2rad'
+                        ? 'bg-blue-500 text-white'
+                        : 'text-gray-700 hover:bg-gray-100'
+                    }`}
+                  >
+                    Degrees → Radians
+                  </button>
+                  <button
+                    onClick={() => setConversionDirection('rad2deg')}
+                    className={`px-4 py-2 rounded-md font-medium transition-colors ${
+                      conversionDirection === 'rad2deg'
+                        ? 'bg-blue-500 text-white'
+                        : 'text-gray-700 hover:bg-gray-100'
+                    }`}
+                  >
+                    Radians → Degrees
+                  </button>
+                </div>
+              </div>
+            )}
             <div>
-              <label className="block text-gray-700 font-medium mb-2">Enter first number:</label>
+              <label className="block text-gray-700 font-medium mb-2">
+                {operation === 'angleConversion'
+                  ? conversionDirection === 'deg2rad'
+                    ? 'Enter degrees:'
+                    : 'Enter radians:'
+                  : 'Enter first number:'}
+              </label>
               <input
                 type="number"
                 value={num1}
                 onChange={(e) => setNum1(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="First number"
+                placeholder={operation === 'angleConversion'
+                  ? conversionDirection === 'deg2rad'
+                    ? 'Degrees'
+                    : 'Radians'
+                  : 'First number'}
               />
             </div>
-            {['sqrt', 'round', 'floor', 'ceil', 'reciprocal', 'sin', 'cos', 'tan', 'factorial', 'log', 'log10', 'deg2rad', 'rad2deg'].includes(operation) ? null : (
+            {['sqrt', 'round', 'floor', 'ceil', 'reciprocal', 'sin', 'cos', 'tan', 'factorial', 'log', 'log10', 'angleConversion'].includes(operation) ? null : (
               <div>
                 <label className="block text-gray-700 font-medium mb-2">Enter second number:</label>
                 <input

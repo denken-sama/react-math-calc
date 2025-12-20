@@ -390,25 +390,25 @@ const multiply = (x: number, y: number): number => x * y;
 
   const renderMenu = () => (
     <div className="text-center">
-      <h3 className="text-xl font-semibold mb-6 text-blue-800">Choose how to enter your calculation:</h3>
-      <div className="space-y-4">
+      <h3 className="text-2xl font-bold mb-8 text-gray-800">Select Calculation Mode:</h3>
+      <div className="space-y-5">
         <button
           onClick={() => {setMode('step-by-step'); setCurrentStep(1);}}
-          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+          className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 ease-in-out transform hover:scale-105 shadow-lg"
         >
-          1. Menu-based (step by step)
+          Step-by-Step Calculation
         </button>
         <button
           onClick={() => setMode('expression')}
-          className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+          className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 ease-in-out transform hover:scale-105 shadow-lg"
         >
-          2. Expression (e.g., 5 + 3)
+          Expression Input (e.g., 5 + 3 * 2)
         </button>
         <button
           onClick={() => window.close()}
-          className="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+          className="w-full bg-gray-500 hover:bg-gray-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 ease-in-out transform hover:scale-105 shadow-lg"
         >
-          3. Quit
+          Exit Calculator
         </button>
       </div>
     </div>
@@ -418,125 +418,125 @@ const multiply = (x: number, y: number): number => x * y;
     if (currentStep === 1) {
       return (
         <div className="text-center">
-          <h3 className="text-xl font-semibold mb-6 text-blue-800">Select operation:</h3>
-          <div className="space-y-4">
+          <h3 className="text-2xl font-bold mb-8 text-gray-800">Choose an Operation:</h3>
+          <div className="grid grid-cols-2 gap-4">
             <button
               onClick={() => {setOperation('add'); setCurrentStep(2);}}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
             >
-              1. Addition (+)
+              Addition (+)
             </button>
             <button
               onClick={() => {setOperation('subtract'); setCurrentStep(2);}}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
             >
-              2. Subtraction (-)
+              Subtraction (-)
             </button>
             <button
               onClick={() => {setOperation('divide'); setCurrentStep(2);}}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
             >
-              3. Division (/)
+              Division (/)
             </button>
             <button
               onClick={() => {setOperation('multiply'); setCurrentStep(2);}}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
             >
-              4. Multiplication (*)
+              Multiplication (*)
             </button>
             <button
               onClick={() => {setOperation('percentage'); setCurrentStep(2);}}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
             >
-              5. Percentage (%)
+              Percentage (%)
             </button>
                         <button
               onClick={() => {setOperation('sqrt'); setCurrentStep(2);}}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
             >
-              6. Square Root (√)
+              Square Root (√)
             </button>
             <button
               onClick={() => {setOperation('round'); setCurrentStep(2);}}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
             >
-              7. Round (e.g., Round 3.7 = 4)
+              Round
             </button>
             <button
               onClick={() => {setOperation('floor'); setCurrentStep(2);}}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
             >
-              8. Floor (e.g., Floor 3.7 = 3)
+              Floor
             </button>
             <button
               onClick={() => {setOperation('ceil'); setCurrentStep(2);}}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
             >
-              9. Ceil (e.g., Ceil 3.2 = 4)
+              Ceil
             </button>
                         <button
               onClick={() => {setOperation('power'); setCurrentStep(2);}}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
             >
-              10. Power (^)
+              Power (^)
             </button>
             <button
               onClick={() => {setOperation('factorial'); setCurrentStep(2);}}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
             >
-              11. Factorial (!)
+              Factorial (!)
             </button>
                         <button
               onClick={() => {setOperation('reciprocal'); setCurrentStep(2);}}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
             >
-              12. Reciprocal (1/x)
+              Reciprocal (1/x)
             </button>
             <button
               onClick={() => {setOperation('sin'); setCurrentStep(2);}}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
             >
-              13. Sine (sin)
+              Sine (sin)
             </button>
             <button
               onClick={() => {setOperation('cos'); setCurrentStep(2);}}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
             >
-              14. Cosine (cos)
+              Cosine (cos)
             </button>
             <button
               onClick={() => {setOperation('tan'); setCurrentStep(2);}}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
             >
-              15. Tangent (tan)
+              Tangent (tan)
             </button>
             <button
               onClick={() => {setOperation('log'); setCurrentStep(2);}}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
             >
-              16. Natural Logarithm (ln)
+              Natural Log (ln)
             </button>
                         <button
               onClick={() => {setOperation('log10'); setCurrentStep(2);}}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
             >
-              17. Logarithm Base 10 (log10)
+              Log Base 10 (log10)
             </button>
             <button
               onClick={() => {setOperation('exp'); setCurrentStep(2);}}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
             >
-              18. Exponential (e^x)
+              Exponential (e^x)
             </button>
             <button
               onClick={() => {setOperation('angleConversion'); setCurrentStep(2);}}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
             >
-              19. Angle Conversion (deg ⇄ rad)
+              Angle Conversion
             </button>
             <button
               onClick={resetCalculator}
-              className="w-full bg-gray-500 hover:bg-gray-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+              className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
             >
               Back to Menu
             </button>
@@ -568,29 +568,29 @@ const multiply = (x: number, y: number): number => x * y;
 
       return (
         <div className="text-center">
-          <h3 className="text-xl font-semibold mb-6 text-blue-800">
+          <h3 className="text-2xl font-bold mb-8 text-gray-800">
             {operationNames[operation as keyof typeof operationNames]}
           </h3>
-          <div className="space-y-4">
+          <div className="space-y-5">
             {operation === 'angleConversion' && (
-              <div className="flex justify-center mb-4">
-                <div className="inline-flex rounded-lg border border-gray-300 bg-white p-1">
+              <div className="flex justify-center mb-6">
+                <div className="inline-flex rounded-xl border border-gray-300 bg-gray-50 p-1 shadow-sm">
                   <button
                     onClick={() => setConversionDirection('deg2rad')}
-                    className={`px-4 py-2 rounded-md font-medium transition-colors ${
+                    className={`px-5 py-2 rounded-lg font-medium transition-all duration-200 ${
                       conversionDirection === 'deg2rad'
-                        ? 'bg-blue-500 text-white'
-                        : 'text-gray-700 hover:bg-gray-100'
+                        ? 'bg-indigo-600 text-white shadow-md'
+                        : 'text-gray-700 hover:bg-gray-200'
                     }`}
                   >
                     Degrees → Radians
                   </button>
                   <button
                     onClick={() => setConversionDirection('rad2deg')}
-                    className={`px-4 py-2 rounded-md font-medium transition-colors ${
+                    className={`px-5 py-2 rounded-lg font-medium transition-all duration-200 ${
                       conversionDirection === 'rad2deg'
-                        ? 'bg-blue-500 text-white'
-                        : 'text-gray-700 hover:bg-gray-100'
+                        ? 'bg-indigo-600 text-white shadow-md'
+                        : 'text-gray-700 hover:bg-gray-200'
                     }`}
                   >
                     Radians → Degrees
@@ -599,7 +599,7 @@ const multiply = (x: number, y: number): number => x * y;
               </div>
             )}
             <div>
-              <label className="block text-gray-700 font-medium mb-2">
+              <label className="block text-gray-700 font-medium mb-2 text-left">
                 {operation === 'angleConversion'
                   ? conversionDirection === 'deg2rad'
                     ? 'Enter degrees:'
@@ -610,36 +610,35 @@ const multiply = (x: number, y: number): number => x * y;
                 type="number"
                 value={num1}
                 onChange={(e) => setNum1(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm"
                 placeholder={operation === 'angleConversion'
                   ? conversionDirection === 'deg2rad'
-                    ? 'Degrees'
-                    : 'Radians'
+                    ? 'Degrees value' : 'Radians value'
                   : 'First number'}
               />
             </div>
-            {['sqrt', 'round', 'floor', 'ceil', 'reciprocal', 'sin', 'cos', 'tan', 'factorial', 'log', 'log10', 'angleConversion'].includes(operation) ? null : (
+            {['sqrt', 'round', 'floor', 'ceil', 'reciprocal', 'sin', 'cos', 'tan', 'factorial', 'log', 'log10', 'exp', 'angleConversion'].includes(operation) ? null : (
               <div>
-                <label className="block text-gray-700 font-medium mb-2">Enter second number:</label>
+                <label className="block text-gray-700 font-medium mb-2 text-left">Enter second number:</label>
                 <input
                   type="number"
                   value={num2}
                   onChange={(e) => setNum2(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm"
                   placeholder="Second number"
                 />
               </div>
             )}
-            <div className="flex space-x-4">
+            <div className="flex space-x-4 mt-6">
               <button
                 onClick={handleStepByStepCalculation}
-                className="flex-1 bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+                className="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
               >
                 Calculate
               </button>
               <button
                 onClick={resetCalculator}
-                className="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+                className="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
               >
                 Back to Menu
               </button>
@@ -652,31 +651,31 @@ const multiply = (x: number, y: number): number => x * y;
 
   const renderExpression = () => (
     <div className="text-center">
-      <h3 className="text-xl font-semibold mb-6 text-blue-800">Enter Expression</h3>
-      <div className="space-y-4">
+      <h3 className="text-2xl font-bold mb-8 text-gray-800">Enter Your Expression:</h3>
+      <div className="space-y-5">
         <div>
-          <label className="block text-gray-700 font-medium mb-2">
-            Enter your expression (e.g., 5 + 3) or unary operation (e.g., sqrt 9, reciprocal 5):
+          <label className="block text-gray-700 font-medium mb-2 text-left">
+            Input your mathematical expression (e.g., 5 + 3 * 2) or unary operation (e.g., sqrt 9, reciprocal 5):
           </label>
           <input
             type="text"
             value={expression}
             onChange={(e) => setExpression(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            placeholder="e.g., 10 / 2 or reciprocal 5"
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm"
+            placeholder="e.g., 10 / 2 + (3 * 4) or sin 90"
             onKeyPress={(e) => e.key === 'Enter' && handleExpressionCalculation()}
           />
         </div>
-        <div className="flex space-x-4">
+        <div className="flex space-x-4 mt-6">
           <button
             onClick={handleExpressionCalculation}
-            className="flex-1 bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+            className="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
           >
-            Calculate
+            Evaluate Expression
           </button>
           <button
             onClick={resetCalculator}
-            className="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+            className="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
           >
             Back to Menu
           </button>
@@ -686,14 +685,14 @@ const multiply = (x: number, y: number): number => x * y;
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
-      <div className="max-w-md mx-auto">
-        <div className="bg-white rounded-xl shadow-lg p-8">
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center py-8 px-4">
+      <div className="max-w-lg w-full">
+        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-200">
           {/* Header */}
-          <div className="text-center mb-8">
-                        <h1 className="text-3xl font-bold text-gray-800 mb-2">Full-Featured Math Calculator</h1>
-            <div className="border-b-2 border-blue-500 w-16 mx-auto mb-4"></div>
-                                                                                                                                                                                                <p className="text-gray-600">Operations: Add (+), Subtract (-), Multiply (x), Divide (÷), Percentage (%), Square Root (√), Power (x^y), Round (R), Floor (F), Ceil (C), Factorial (!), Sine (sin), Cosine (cos), Tangent (tan), Natural Log (ln), Log Base 10 (log10), Exponential (e^x), Degrees to Radians (deg→rad), Radians to Degrees (rad→deg)</p>
+          <div className="text-center mb-10">
+                        <h1 className="text-4xl font-extrabold text-gray-900 mb-3">Advanced Calculator</h1>
+            <div className="border-b-4 border-indigo-500 w-20 mx-auto mb-6 rounded-full"></div>
+                                                                                                                                                                                                <p className="text-gray-600 text-sm leading-relaxed">Perform a wide range of calculations: basic arithmetic, percentages, square roots, powers, rounding, floor, ceil, factorials, reciprocals, trigonometric functions (sin, cos, tan), logarithms (ln, log10), exponentials, and angle conversions.</p>
           </div>
 
           {/* Main Content */}
@@ -705,16 +704,16 @@ const multiply = (x: number, y: number): number => x * y;
 
           {/* Error Display */}
           {error && (
-            <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+            <div className="mb-6 p-4 bg-red-50 border border-red-300 text-red-700 rounded-xl text-sm">
               {error}
             </div>
           )}
 
           {/* Result Display */}
           {result && (
-            <div className="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg text-center">
-              <div className="font-bold text-lg">Result:</div>
-              <div className="text-xl">{result}</div>
+            <div className="mb-6 p-4 bg-green-50 border border-green-300 text-green-700 rounded-xl text-center">
+              <div className="font-semibold text-base text-green-800">Result:</div>
+              <div className="text-3xl font-bold text-green-900 mt-1">{result}</div>
             </div>
           )}
 
@@ -723,44 +722,44 @@ const multiply = (x: number, y: number): number => x * y;
             <div className="text-center">
               <button
                 onClick={resetInputsAndResult}
-                className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-6 rounded-lg transition-colors"
+                className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
               >
-                New Calculation
+                Start New Calculation
               </button>
             </div>
           )}
 
           {/* Memory Display and Controls */}
-          <div className="mt-8 p-4 bg-gray-50 border border-gray-200 rounded-lg">
-            <div className="font-bold text-lg text-gray-800 mb-2">Memory: {memory !== null ? memory : 'Empty'}</div>
-            <div className="grid grid-cols-5 gap-2">
+          <div className="mt-10 p-5 bg-gray-50 border border-gray-200 rounded-xl shadow-inner">
+            <div className="font-semibold text-xl text-gray-800 mb-4">Memory: <span className="font-bold text-indigo-600">{memory !== null ? memory : 'Empty'}</span></div>
+            <div className="grid grid-cols-5 gap-3">
               <button
                 onClick={handleMemoryClear}
-                className="bg-red-400 hover:bg-red-500 text-white font-medium py-2 px-2 rounded-lg text-sm transition-colors"
+                className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-3 rounded-lg text-sm transition-colors shadow-sm"
               >
                 MC
               </button>
               <button
                 onClick={handleMemoryRecall}
-                className="bg-blue-400 hover:bg-blue-500 text-white font-medium py-2 px-2 rounded-lg text-sm transition-colors"
+                className="bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 px-3 rounded-lg text-sm transition-colors shadow-sm"
               >
                 MR
               </button>
               <button
                 onClick={handleMemoryAdd}
-                className="bg-green-400 hover:bg-green-500 text-white font-medium py-2 px-2 rounded-lg text-sm transition-colors"
+                className="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-3 rounded-lg text-sm transition-colors shadow-sm"
               >
                 M+
               </button>
               <button
                 onClick={handleMemorySubtract}
-                className="bg-yellow-400 hover:bg-yellow-500 text-white font-medium py-2 px-2 rounded-lg text-sm transition-colors"
+                className="bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-3 rounded-lg text-sm transition-colors shadow-sm"
               >
                 M-
               </button>
               <button
                 onClick={handleMemoryStore}
-                className="bg-purple-400 hover:bg-purple-500 text-white font-medium py-2 px-2 rounded-lg text-sm transition-colors"
+                className="bg-purple-500 hover:bg-purple-600 text-white font-medium py-2 px-3 rounded-lg text-sm transition-colors shadow-sm"
               >
                 MS
               </button>

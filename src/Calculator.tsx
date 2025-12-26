@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { add, subtract, multiply, divide } from './utils/mathOperations';
 
 const Calculator = () => {
         const [mode, setMode] = useState('menu'); // 'menu', 'step-by-step', 'expression' // 'initial', 'menu', 'step-by-step', 'expression' // 'initial', 'menu', 'step-by-step', 'expression' // 'menu', 'step-by-step', 'expression'
@@ -12,17 +13,7 @@ const Calculator = () => {
   const [memory, setMemory] = useState<number | null>(null); // New state for memory
   const [conversionDirection, setConversionDirection] = useState<'deg2rad' | 'rad2deg'>('deg2rad'); // State for angle conversion direction
 
-  // Calculator operations
-  const add = (x: number, y: number): number => x + y;
-const multiply = (x: number, y: number): number => x * y;
-  const subtract = (x: number, y: number): number => x - y;
-  const divide = (x: number, y: number): number | string => {
-    if (y !== 0) {
-      return x / y;
-    } else {
-      return "Error: Cannot divide by zero!";
-    }
-  };
+
 
   const percentage = (x: number, y?: number): number => y !== undefined && !isNaN(y) ? (x / 100) * y : x / 100;
 

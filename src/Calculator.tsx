@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { add, subtract, multiply, divide } from './utils/mathOperations';
+import { percentage, squareRoot, sin, factorial } from './utils/advancedMathOperations';
 
 const Calculator = () => {
         const [mode, setMode] = useState('menu'); // 'menu', 'step-by-step', 'expression' // 'initial', 'menu', 'step-by-step', 'expression' // 'initial', 'menu', 'step-by-step', 'expression' // 'menu', 'step-by-step', 'expression'
@@ -15,9 +16,7 @@ const Calculator = () => {
 
 
 
-  const percentage = (x: number, y?: number): number => y !== undefined && !isNaN(y) ? (x / 100) * y : x / 100;
 
-    const squareRoot = (x: number): number | string => x >= 0 ? Math.sqrt(x) : 'Error: Negative number';
 
     const power = (x: number, y: number): number => Math.pow(x, y);
 
@@ -25,7 +24,6 @@ const Calculator = () => {
   const floor = (x: number): number => Math.floor(x);
       const ceil = (x: number): number => Math.ceil(x);
 
-  const sin = (x: number): number => Math.sin(x * Math.PI / 180); // Assuming input in degrees
   const cos = (x: number): number => Math.cos(x * Math.PI / 180); // Assuming input in degrees
   const tan = (x: number): number | string => {
     const angleInRadians = x * Math.PI / 180;
@@ -44,19 +42,7 @@ const Calculator = () => {
     }
   };
 
-    const factorial = (x: number): number | string => {
-    if (x < 0 || !Number.isInteger(x)) {
-      return 'Error: Factorial is only defined for non-negative integers';
-    }
-    if (x === 0) {
-      return 1;
-    }
-    let result = 1;
-    for (let i = 2; i <= x; i++) {
-      result *= i;
-    }
-    return result;
-  };
+    
 
   const log = (x: number): number | string => {
     if (x <= 0) {

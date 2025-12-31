@@ -17,3 +17,47 @@ export const factorial = (x: number): number | string => {
   }
   return result;
 };
+
+export const power = (x: number, y: number): number => Math.pow(x, y);
+
+export const round = (x: number): number => Math.round(x);
+export const floor = (x: number): number => Math.floor(x);
+export const ceil = (x: number): number => Math.ceil(x);
+
+export const cos = (x: number): number => Math.cos(x * Math.PI / 180); // Assuming input in degrees
+export const tan = (x: number): number | string => {
+  const angleInRadians = x * Math.PI / 180;
+  // Check for angles where tan is undefined (e.g., 90, 270 degrees)
+  if (Math.abs(Math.cos(angleInRadians)) < 1e-10) {
+    return "Error: Tan undefined";
+  }
+  return Math.tan(angleInRadians);
+};
+
+export const reciprocal = (x: number): number | string => {
+  if (x === 0) {
+    return "Error: Cannot find reciprocal of zero!";
+  } else {
+    return 1 / x;
+  }
+};
+
+export const log = (x: number): number | string => {
+  if (x <= 0) {
+    return 'Error: Logarithm is only defined for positive numbers';
+  }
+  return Math.log(x); // Natural logarithm (base e)
+};
+
+export const log10 = (x: number): number | string => {
+  if (x <= 0) {
+    return 'Error: Logarithm is only defined for positive numbers';
+  }
+  return Math.log10(x); // Base 10 logarithm
+};
+
+export const exponential = (x: number): number => Math.exp(x);
+
+export const degToRad = (deg: number): number => deg * (Math.PI / 180);
+
+export const radToDeg = (rad: number): number => rad * (180 / Math.PI);
